@@ -10,10 +10,25 @@ def more(text):
             reply = input('Show more (y/n)? ')
             if reply == 'n':
                 break
+    
 
 
-url = 'http://python.org/'  # προσδιορισμός του url
+if __name__ == '__main__':
 
-with requests.get(url) as response:  # το αντικείμενο response
-    html = response.text
-    more(html)
+    # url = input('Enter URL: ')
+    url = 'http://google.com/'
+
+    with requests.get(url) as response:  # το αντικείμενο response
+        html = response.text
+        # more(html)
+        # print(response.headers)
+        server = response.headers['Server']
+    
+        print(f"Web Server: {server}")
+        
+        try:
+            biscuits = response.headers["Set-Cookie"]
+            print(f"Cookies: {biscuits.split(';')[0]}")
+            print(f"Expires: {biscuits.split(';')[1]}")
+        except KeyError:
+            print("Cookie header not found")
