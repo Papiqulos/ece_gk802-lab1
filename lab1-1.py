@@ -17,8 +17,8 @@ def get_headers(url):
         print("--------------------")
         headers = response.headers
         print("Headers: ")
-        for header in headers:
-            print(f"{header}")
+        for key, value in headers.items():
+            print(f"{key:30s}: {value}")
 
 
 def get_server(url):
@@ -29,13 +29,16 @@ def get_server(url):
 
 
 def get_cookies(url):
-    with requests.get(url) as response:  
-        cookies = response.cookies
-        for cookie in cookies:
-            date = datetime.datetime.fromtimestamp(cookie.expires).strftime('%Y-%m-%d %H:%M:%S')
-            print(f"Cookie Name: {cookie.name}")
-            print(f"Expiration Date: {date}")
-            print("--------------------")
+    with requests.get(url) as response:
+        try:
+            cookies = response.cookies
+            for cookie in cookies:
+                date = datetime.datetime.fromtimestamp(cookie.expires).strftime('%Y-%m-%d %H:%M:%S')
+                print(f"Cookie Name: {cookie.name}")
+                print(f"Expiration Date: {date}")
+                print("--------------------")
+        except:
+            print("No cookies found")
 
 
 if __name__ == '__main__':
@@ -48,8 +51,3 @@ if __name__ == '__main__':
     get_server(url)
     
     get_cookies(url)
-
-
-
-        
-        
