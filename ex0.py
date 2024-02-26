@@ -1,5 +1,5 @@
-import requests  # εισαγωγή της βιβλιοθήκης
-
+import requests  
+import datetime
 
 def more(text):
     count = 0
@@ -12,23 +12,44 @@ def more(text):
                 break
     
 
+def get_headers(url):
+    with requests.get(url) as response:  
+        print("--------------------")
+        headers = response.headers
+        print("Headers: ")
+        for header in headers:
+            print(f"{header}")
+
+
+def get_server(url):
+    with requests.get(url) as response:  
+        server = response.headers['Server']
+        print("--------------------")
+        print(f"Web Server: {server}")
+
+
+def get_cookies(url):
+    with requests.get(url) as response:  
+        cookies = response.cookies
+        for cookie in cookies:
+            date = datetime.datetime.fromtimestamp(cookie.expires).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"Cookie Name: {cookie.name}")
+            print(f"Expiration Date: {date}")
+            print("--------------------")
+
 
 if __name__ == '__main__':
 
     # url = input('Enter URL: ')
-    url = 'http://google.com/'
-
-    with requests.get(url) as response:  # το αντικείμενο response
-        html = response.text
-        # more(html)
-        # print(response.headers)
-        server = response.headers['Server']
+    url = "https://www.google.com"
     
-        print(f"Web Server: {server}")
+    get_headers(url)
+    
+    get_server(url)
+    
+    get_cookies(url)
+
+
+
         
-        try:
-            biscuits = response.headers["Set-Cookie"]
-            print(f"Cookies: {biscuits.split(';')[0]}")
-            print(f"Expires: {biscuits.split(';')[1]}")
-        except KeyError:
-            print("Cookie header not found")
+        
