@@ -14,9 +14,8 @@ def more(text):
 
 def get_headers(url):
     with requests.get(url) as response:  
-        print("--------------------")
         headers = response.headers
-        print("Headers: ")
+        print("--------------------Headers--------------------")
         for key, value in headers.items():
             print(f"{key:30s}: {value}")
 
